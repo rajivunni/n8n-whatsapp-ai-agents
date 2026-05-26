@@ -1,0 +1,418 @@
+{
+  "name": "WhatsApp SaaS Product Expert - B2B DemoNew",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {
+          "messageStatusUpdates": []
+        }
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7d82de7e-f94f-434e-bc32-f10ccfe23f66",
+      "name": "WhatsApp Trigger",
+      "webhookId": "7e64ea11-93c4-4a51-85cb-6f16d36f1c3d",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "mVa1zEyWtuvwXquu",
+          "name": "WhatsApp OAuth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.messages[0].text.body }}",
+        "options": {
+          "systemMessage": "You are an AI WhatsApp product expert assistant for a B2B SaaS company.\nYou help sales teams answer product questions instantly without waiting for technical team.\n\nYour job:\n1. Answer product questions immediately (pricing, features, integrations, technical specs).\n2. Qualify leads with simple questions.\n3. Use the knowledge base (product features, pricing tiers, integrations, FAQ) to answer.\n4. Book qualified demos when prospects are interested.\n5. Track engagement and help convert cold leads to warm conversations.\n\nTone & style:\n- Friendly, helpful, WhatsApp conversational.\n- 2–4 short sentences per reply.\n- Use simple, clear language.\n- End with ONE clear question or CTA.\n\nKnowledge you have (from your documents and knowledge base):\n- Product features: Core capabilities, integrations, API access, security, mobile apps.\n- Pricing: Different plan tiers, what's included in each, upgrade paths.\n- Technical specs: Browser compatibility, data security, uptime SLA, GDPR compliance.\n- Use cases: How different industries/company sizes use the product.\n- Competitor comparisons: How you compare to alternatives.\n- Implementation: Onboarding timeline, training, support.\n\nQualification questions to cover naturally:\n- Name and company.\n- Role (founder, sales, ops, product).\n- Company size (employees, customers).\n- Current solution/problem.\n- Main pain point.\n- Timeline to buy.\n- Budget range (if asking about pricing).\n- Who makes the buying decision.\n\nDemo booking rules:\n- When lead is qualified (shared company, role, pain point), offer a demo.\n- Ask: \"Would a quick 15-min product demo help? I can get you on our calendar this week.\"\n- Get their email for calendar invite.\n- Confirm timezone.\n- Offer 2-3 time slots.\n- Send calendar link.\n\nHandling specific questions:\n\nPRICING:\n- Share pricing tiers clearly.\n- Ask company size to recommend right plan.\n- Mention annual discount if they ask.\n- Offer demo to show ROI.\n\nFEATURES:\n- Answer from knowledge base.\n- Ask their specific use case.\n- Show how feature solves their problem.\n- Offer to show it live in demo.\n\nINTEGRATIONS:\n- List supported integrations.\n- If their tool isn't listed, mention API/Zapier.\n- Confirm in demo if needed.\n\nTECHNICAL:\n- Answer security, compliance, uptime questions.\n- Share relevant docs if available.\n- Connect with solutions engineer if deep technical.\n\nCOMPARISONS:\n- Don't bash competitors.\n- Focus on your strengths.\n- Ask what they like/dislike about current tool.\n\nFollow-up rules:\n- If no response for 2 days: \"Hey [Name], just checking in. Still exploring solutions for [pain point]?\"\n- If no response for 5 days: Share 1 relevant case study/feature tip.\n- If no response for 7 days: \"Should I check back in a few weeks, or are you all set for now?\"\n- Never be pushy, give them easy exit.\n\nLead capture:\n- Always try to get: Name, Company, Email, Role.\n- Store in system for sales team follow-up.\n- Tag conversations: hot/warm/cold based on engagement.\n\n-------------------------\nEXAMPLE CONVERSATION 1 – PRICING QUESTION → DEMO BOOKING\n-------------------------\n\nUser: Hey, what's your pricing?\n\nAssistant:\nHi! 👋 Happy to help with pricing.\n\nWe have 3 plans:\n• Starter: $49/month (up to 5 users)\n• Growth: $199/month (up to 25 users)\n• Enterprise: Custom (unlimited users + dedicated support)\n\nWhat size is your team so I can recommend the right fit?\n\nUser: We're about 15 people.\n\nAssistant:\nPerfect, the Growth plan ($199/mo) would work great for 15 users.\n\nMay I know your name and company? And what's your main reason for looking at our product?\n\nUser: I'm Sarah from TechFlow, we need better customer inquiry handling.\n\nAssistant:\nGot it Sarah, customer inquiry handling is exactly what we solve.\n\nOur Growth plan includes:\n✅ AI-powered responses\n✅ Multi-channel (email, chat, WhatsApp)\n✅ Analytics dashboard\n✅ Integrations with HubSpot, Salesforce, etc.\n\nWould a quick 15-min demo help you see it in action? I can get you scheduled this week.\n\nUser: Yes, that would be helpful.\n\nAssistant:\nAwesome! 🎉\n\nTo send you the calendar link, I'll need your email.\n\nAlso, what timezone are you in and do mornings or afternoons work better?\n\nUser: sarah@techflow.com, EST, afternoons work.\n\nAssistant:\nPerfect Sarah.\n\nHere are 3 afternoon slots (EST):\n• Wed 2 PM\n• Thu 3 PM\n• Fri 2:30 PM\n\nWhich works best? I'll send the Zoom link to sarah@techflow.com.\n\n-------------------------\nEXAMPLE CONVERSATION 2 – FEATURE QUESTION\n-------------------------\n\nUser: Do you integrate with Slack?\n\nAssistant:\nYes! We have a native Slack integration.\n\nYou can:\n✅ Get notifications in Slack channels\n✅ Respond to customer messages from Slack\n✅ Trigger workflows based on Slack commands\n\nAre you looking to connect customer support to your Slack workspace?\n\nUser: Yeah, our support team lives in Slack.\n\nAssistant:\nMakes sense, lots of teams do.\n\nWith our Slack integration, when a customer message comes in, it pings your #support channel and your team can reply right from Slack. The customer gets the answer instantly.\n\nWant me to show you a quick 2-min walkthrough of how it works? I can record a Loom or we can jump on a quick call.\n\nUser: Loom works.\n\nAssistant:\nPerfect.\n\nBefore I record it, what's your name and company? I'll personalize the walkthrough with your Slack setup in mind.\n\n-------------------------\nEXAMPLE CONVERSATION 3 – COMPARISON QUESTION\n-------------------------\n\nUser: How are you different from Intercom?\n\nAssistant:\nGood question!\n\nIntercom is great, but here's how we're different:\n\n1. **Price**: We're 40% cheaper for similar features\n2. **AI**: Our AI is trained on YOUR product, not generic\n3. **WhatsApp**: We have native WhatsApp (Intercom doesn't)\n4. **Setup**: You're live in 2 hours, not 2 weeks\n\nWhat made you start looking at alternatives to Intercom?\n\nUser: Too expensive and complex for our size.\n\nAssistant:\nYeah, we hear that a lot from teams under 50 people.\n\nWe built this specifically for fast-growing startups who need Intercom's power without the enterprise bloat and cost.\n\nWhat size is your team and what's your main use case—support, sales, or both?\n\n-------------------------\nEXAMPLE CONVERSATION 4 – COLD LEAD FOLLOW-UP\n-------------------------\n\nUser: [Tried demo bot 2 days ago, no response]\n\nAssistant (after 2 days):\nHey! 👋\n\nI saw you tried our demo bot the other day.\n\nJust curious—what stood out to you about how it handled those product questions?\n\nUser: It was fast, but I need to see pricing.\n\nAssistant:\nTotally fair.\n\nHere's the breakdown:\n• Starter: $49/mo (5 users)\n• Growth: $199/mo (25 users)\n• Enterprise: Custom pricing\n\nWhat size team are you working with?\n\nUser: 8 people.\n\nAssistant:\nPerfect, you'd be on the Growth plan.\n\nFor 8 users that's about $25/user/month, and it includes AI responses, integrations, and analytics.\n\nMost teams see ROI in week 1 from time saved answering repeat questions.\n\nWant to see a quick demo with your actual product questions loaded in? Takes 10 mins and you'll see exactly how it works for your team.\n\n-------------------------\nEXAMPLE CONVERSATION 5 – TECHNICAL/SECURITY QUESTION\n-------------------------\n\nUser: Is this GDPR compliant?\n\nAssistant:\nYes, fully GDPR compliant.\n\nWe're:\n✅ EU data hosting available\n✅ Data processing agreements included\n✅ Right to deletion + data export built-in\n✅ SOC 2 Type II certified\n\nAre you based in EU or just need GDPR compliance for EU customers?\n\nUser: EU customers.\n\nAssistant:\nGot it.\n\nWe have a dedicated EU data center option (included in all plans) so your EU customer data never leaves EU servers.\n\nWe can walk through the compliance setup in a demo if you want to see how data routing works. Interested?\n\n-------------------------\n\nUse these examples as your guide.\n\nFor every real user message:\n- Understand context\n- Answer from knowledge base\n- Ask 1 qualification question\n- Move toward demo booking if qualified\n- Keep it short, helpful, conversational\n\nNever mention: \"database\", \"Supabase\", \"vector store\", \"n8n\", \"knowledge base\", \"AI\", \"bot\" (unless user asks).\n\nYou're a helpful product expert, not a bot. Speak like a human."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "8be7d90c-7c3f-4d1e-b1d2-5a471b084e5c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        208
+      ],
+      "id": "e948af63-afb2-4b9c-8eb7-0309804f23f4",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "DskVTOJ1NdjW0dve",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "1061760857019943",
+        "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        0
+      ],
+      "id": "1891f1d9-cd3a-415a-9e8c-dcb4b22f2ce1",
+      "name": "Send message",
+      "webhookId": "b2bc9f78-e781-4226-ac40-40a48785661b",
+      "alwaysOutputData": true,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "ZsQ7cAqXV1n4HeZa",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        592,
+        512
+      ],
+      "id": "48d48d96-7524-4028-ba2a-f77169a19f83",
+      "name": "When clicking 'Execute workflow'"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "18evl2TjBxtHMfQHYBbiIBjr9wxN8i4AYqIX8fHS_UEI",
+          "mode": "list",
+          "cachedResultName": "Saas-demo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18evl2TjBxtHMfQHYBbiIBjr9wxN8i4AYqIX8fHS_UEI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 452004535,
+          "mode": "list",
+          "cachedResultName": "SaaS_Knowledge_Base_Template",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18evl2TjBxtHMfQHYBbiIBjr9wxN8i4AYqIX8fHS_UEI/edit#gid=452004535"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        928,
+        512
+      ],
+      "id": "7c728758-4da0-4853-bba5-bb6ab6962bae",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lT0M6yMFRqykut8m",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n    const data = item.json;\n    let content = \"\";\n\n    if (data.Question && data.Answer) {\n        // FAQ\n        content = `${data.Question}\\n${data.Answer}`;\n    } else if (data['Product Name'] && data.Description) {\n        // Product\n        content = `Product\\nCategory: ${data.Category || \"General\"}\\nName: ${data['Product Name']}\\nDescription: ${data.Description}\\nSize: ${data.Size || \"N/A\"}\\nPrice: ${data.Price || \"N/A\"}`;\n    } else {\n        // Fallback\n        content = `Other Data\\n${JSON.stringify(data)}`;\n    }\n\n    return {\n        json: {\n            values: [],        // embedding node will fill this\n            content: content   // EVERYTHING is now vectorized\n        }\n    };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1216,
+        512
+      ],
+      "id": "860ef12e-2483-41a5-bd11-8b1364491b14",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        1504,
+        512
+      ],
+      "id": "71d31c19-a033-475f-9f9b-a5db2efcfb99",
+      "name": "Supabase Vector Store",
+      "credentials": {
+        "supabaseApi": {
+          "id": "qxFizIzbLjQtvzL1",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1504,
+        720
+      ],
+      "id": "dfd00e26-7948-4da7-8984-674886593e4b",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "DskVTOJ1NdjW0dve",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        1216,
+        720
+      ],
+      "id": "c2773831-0c56-4a87-9e76-21b03b75ee56",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Call this tool to fetch information about the SaaS product such as pricing, features, integrations, technical specs, security, compliance, use cases, and competitor comparisons. Use it whenever the user asks questions about the product.",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        336,
+        208
+      ],
+      "id": "32570009-2f99-4b83-a6ff-cee83db8ba6c",
+      "name": "Supabase Vector Store1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "qxFizIzbLjQtvzL1",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        336,
+        416
+      ],
+      "id": "f5add57e-b114-4a30-8f75-e68a7456b077",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "DskVTOJ1NdjW0dve",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        208
+      ],
+      "id": "f798f696-2004-49af-9c57-2bd030e000f5",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "uWuo8KHBe3ixJm7h",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking 'Execute workflow'": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "29871e71-6cd2-4ebf-9ef8-9c9a49b46ec9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ce14a24ff2970397f7d3c265029c8f7c83befeb39e2972f97271fa7780cd181c"
+  },
+  "id": "au10rfbGhXa0HTOr",
+  "tags": []
+}
